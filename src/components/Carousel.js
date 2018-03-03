@@ -7,26 +7,22 @@ export default class Carousel extends PureComponent {
   enableDrag = false;
   componentDidMount() {
     this.currIdx = 1;
+    this.content = document.querySelector(".content");
     this.goToPage(1);
   }
   touchStart = e => {
-    // e.stopPropagation();
     this.enableDrag = true;
     this.startX = e.clientX;
     this.start = e.clientX;
   };
   touchMove = e => {
     if (this.enableDrag) {
-      // e.preventDefault();
-      // e.stopPropagation();
       const delta = e.clientX - this.startX;
-      const content = document.querySelector(".content");
-      content.style.left = `${content.offsetLeft + delta}px`;
+      this.content.style.left = `${this.content.offsetLeft + delta}px`;
       this.startX = e.clientX;
     }
   };
   touchEnd = e => {
-    // e.stopPropagation();
     this.enableDrag = false;
     const totalMove = e.clientX - this.start;
     if (totalMove > 150) {
@@ -38,8 +34,7 @@ export default class Carousel extends PureComponent {
     }
   };
   goToPage = pageIdx => {
-    const content = document.querySelector(".content");
-    content.style.left = `${-pageIdx * 300}px`;
+    this.content.style.left = `${-pageIdx * 300}px`;
     this.currIdx = pageIdx;
     if (pageIdx === 0) this.goToPage(3);
     if (pageIdx === 4) this.goToPage(1);
