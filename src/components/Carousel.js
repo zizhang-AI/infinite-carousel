@@ -12,19 +12,21 @@ export default class Carousel extends PureComponent {
   }
   touchStart = e => {
     this.enableDrag = true;
-    this.startX = e.clientX;
-    this.start = e.clientX;
+    this.startX = e.changedTouches ? e.changedTouches[0].pageX : e.clientX;
+    this.start = this.startX;
   };
   touchMove = e => {
     if (this.enableDrag) {
-      const delta = e.clientX - this.startX;
+      const currX = e.changedTouches ? e.changedTouches[0].pageX : e.clientX;
+      const delta = currX - this.startX;
       this.content.style.left = `${this.content.offsetLeft + delta}px`;
-      this.startX = e.clientX;
+      this.startX = currX;
     }
   };
   touchEnd = e => {
     this.enableDrag = false;
-    const totalMove = e.clientX - this.start;
+    const totalMove =
+      (e.touches ? e.changedTouches[0].pageX : e.clientX) - this.start;
     if (totalMove > 150) {
       this.goToPage(this.currIdx - 1);
     } else if (totalMove < -150) {
@@ -47,6 +49,9 @@ export default class Carousel extends PureComponent {
         onMouseMove={this.touchMove}
         onMouseUp={this.touchEnd}
         onMouseLeave={this.touchEnd}
+        onTouchStart={this.touchStart}
+        onTouchMove={this.touchMove}
+        onTouchEnd={this.touchEnd}
       >
         <div className="content">
           <div className="page">3</div>
