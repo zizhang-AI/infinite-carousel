@@ -12,7 +12,6 @@ body {
 }
 .slider .content {
   position: relative;
-  width: 1500px;
 }
 .slider .content .page {
   float: left;

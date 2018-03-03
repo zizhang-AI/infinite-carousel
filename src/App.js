@@ -7,7 +7,11 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Carousel</h1>
-        <Carousel />
+        <Carousel>
+          <div className="page">1</div>
+          <div className="page">2</div>
+          <div className="page">3</div>
+        </Carousel>
       </div>
     );
   }

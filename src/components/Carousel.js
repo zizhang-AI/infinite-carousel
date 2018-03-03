@@ -42,6 +42,13 @@ export default class Carousel extends PureComponent {
     if (pageIdx === 4) this.goToPage(1);
   };
   render() {
+    const children = React.Children.toArray(this.props.children);
+    const head = children[0];
+    const tail = children[children.length - 1];
+    const pages = [tail, ...children, head].map((ele, i) => ({
+      ...ele,
+      key: `#${i}`
+    }));
     return (
       <div
         className="slider"
@@ -53,12 +60,8 @@ export default class Carousel extends PureComponent {
         onTouchMove={this.touchMove}
         onTouchEnd={this.touchEnd}
       >
-        <div className="content">
-          <div className="page">3</div>
-          <div className="page">1</div>
-          <div className="page">2</div>
-          <div className="page">3</div>
-          <div className="page">1</div>
+        <div className="content" style={{ width: 300 * pages.length }}>
+          {pages}
         </div>
       </div>
     );
