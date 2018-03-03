@@ -7,6 +7,8 @@ body {
 .slider {
   overflow: hidden;
   width: 300px;
+  position: relative;
+  margin: auto;
 }
 .slider .content {
   position: relative;
