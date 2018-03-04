@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 
+const transPeriod = 300;
 export default class Carousel extends PureComponent {
   startX = 0;
   endX = 0;
@@ -22,6 +23,7 @@ export default class Carousel extends PureComponent {
   };
   touchMove = e => {
     if (this.enableDrag) {
+      this.content.style.transition = "none";
       const currX = e.changedTouches ? e.changedTouches[0].pageX : e.clientX;
       const delta = currX - this.startX;
       this.content.style.left = `${this.content.offsetLeft + delta}px`;
@@ -29,6 +31,7 @@ export default class Carousel extends PureComponent {
     }
   };
   touchEnd = e => {
+    this.content.style.transition = `left ${transPeriod}ms ease`;
     if (this.enableDrag) {
       const halfWidth = this.props.width / 2;
       const totalMove =
@@ -46,8 +49,18 @@ export default class Carousel extends PureComponent {
   goToPage = pageIdx => {
     this.content.style.left = `${-pageIdx * this.props.width}px`;
     this.currIdx = pageIdx;
-    if (pageIdx === 0) this.goToPage(this.props.children.length);
-    if (pageIdx === this.props.children.length + 1) this.goToPage(1);
+    if (pageIdx === 0) {
+      setTimeout(() => {
+        this.content.style.transition = "none";
+        this.goToPage(this.props.children.length);
+      }, transPeriod);
+    }
+    if (pageIdx === this.props.children.length + 1) {
+      setTimeout(() => {
+        this.content.style.transition = "none";
+        this.goToPage(1);
+      }, transPeriod);
+    }
   };
   render() {
     const children = React.Children.toArray(this.props.children);
