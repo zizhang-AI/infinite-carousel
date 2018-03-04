@@ -10,6 +10,12 @@ export default class Carousel extends PureComponent {
     this.content = document.querySelector(".content");
     this.goToPage(1);
   }
+  componenentWillReceiveProps(nextProps) {
+    // when new arrays comes in, disable mouse actions and return to init state;
+  }
+  componentDidUpdate() {
+    // enable mouse actions after component update;
+  }
   touchStart = e => {
     this.enableDrag = true;
     this.startX = e.changedTouches ? e.changedTouches[0].pageX : e.clientX;
