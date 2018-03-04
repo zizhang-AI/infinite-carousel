@@ -24,15 +24,17 @@ export default class Carousel extends PureComponent {
     }
   };
   touchEnd = e => {
-    const halfWidth = this.props.width / 2;
-    const totalMove =
-      (e.touches ? e.changedTouches[0].pageX : e.clientX) - this.start;
-    if (totalMove > halfWidth) {
-      this.goToPage(this.currIdx - 1);
-    } else if (totalMove < -halfWidth) {
-      this.goToPage(this.currIdx + 1);
-    } else {
-      this.goToPage(this.currIdx);
+    if (this.enableDrag) {
+      const halfWidth = this.props.width / 2;
+      const totalMove =
+        (e.touches ? e.changedTouches[0].pageX : e.clientX) - this.start;
+      if (totalMove > halfWidth) {
+        this.goToPage(this.currIdx - 1);
+      } else if (totalMove < -halfWidth) {
+        this.goToPage(this.currIdx + 1);
+      } else {
+        this.goToPage(this.currIdx);
+      }
     }
     this.enableDrag = false;
   };
