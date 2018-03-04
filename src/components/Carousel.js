@@ -1,7 +1,5 @@
 import React, { PureComponent } from "react";
 
-const isEqual = require("lodash.isequal");
-
 export default class Carousel extends PureComponent {
   startX = 0;
   endX = 0;
