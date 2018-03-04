@@ -25,7 +25,6 @@ export default class Carousel extends PureComponent {
   };
   touchEnd = e => {
     const halfWidth = this.props.width / 2;
-    this.enableDrag = false;
     const totalMove =
       (e.touches ? e.changedTouches[0].pageX : e.clientX) - this.start;
     if (totalMove > halfWidth) {
@@ -35,6 +34,7 @@ export default class Carousel extends PureComponent {
     } else {
       this.goToPage(this.currIdx);
     }
+    this.enableDrag = false;
   };
   goToPage = pageIdx => {
     this.content.style.left = `${-pageIdx * this.props.width}px`;
