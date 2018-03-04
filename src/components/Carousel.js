@@ -24,22 +24,23 @@ export default class Carousel extends PureComponent {
     }
   };
   touchEnd = e => {
+    const halfWidth = this.props.width / 2;
     this.enableDrag = false;
     const totalMove =
       (e.touches ? e.changedTouches[0].pageX : e.clientX) - this.start;
-    if (totalMove > 150) {
+    if (totalMove > halfWidth) {
       this.goToPage(this.currIdx - 1);
-    } else if (totalMove < -150) {
+    } else if (totalMove < -halfWidth) {
       this.goToPage(this.currIdx + 1);
     } else {
       this.goToPage(this.currIdx);
     }
   };
   goToPage = pageIdx => {
-    this.content.style.left = `${-pageIdx * 300}px`;
+    this.content.style.left = `${-pageIdx * this.props.width}px`;
     this.currIdx = pageIdx;
-    if (pageIdx === 0) this.goToPage(3);
-    if (pageIdx === 4) this.goToPage(1);
+    if (pageIdx === 0) this.goToPage(this.props.children.length);
+    if (pageIdx === this.props.children.length + 1) this.goToPage(1);
   };
   render() {
     const children = React.Children.toArray(this.props.children);
@@ -47,8 +48,9 @@ export default class Carousel extends PureComponent {
     const tail = children[children.length - 1];
     const pages = [tail, ...children, head].map((ele, i) => ({
       ...ele,
-      key: `#${i}`
+      key: `${ele.props.id || ""}_${i}`
     }));
+    const { width } = this.props;
     return (
       <div
         className="slider"
@@ -59,8 +61,9 @@ export default class Carousel extends PureComponent {
         onTouchStart={this.touchStart}
         onTouchMove={this.touchMove}
         onTouchEnd={this.touchEnd}
+        style={{ width: this.props.width }}
       >
-        <div className="content" style={{ width: 300 * pages.length }}>
+        <div className="content" style={{ width: width * pages.length }}>
           {pages}
         </div>
       </div>

@@ -7,10 +7,16 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Carousel</h1>
-        <Carousel>
-          <div className="page">1</div>
-          <div className="page">2</div>
-          <div className="page">3</div>
+        <Carousel width={300}>
+          <div className="page" style={{ width: 300 }}>
+            1
+          </div>
+          <div className="page" style={{ width: 300 }}>
+            2
+          </div>
+          <div className="page" style={{ width: 300 }}>
+            3
+          </div>
         </Carousel>
       </div>
     );
