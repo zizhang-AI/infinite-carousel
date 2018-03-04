@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 
+const isEqual = require("lodash.isequal");
+
 export default class Carousel extends PureComponent {
   startX = 0;
   endX = 0;
@@ -10,11 +12,10 @@ export default class Carousel extends PureComponent {
     this.content = document.querySelector(".content");
     this.goToPage(1);
   }
-  componenentWillReceiveProps(nextProps) {
-    // when new arrays comes in, disable mouse actions and return to init state;
-  }
+  // when new children's length less than the current one, there could be problem.
   componentDidUpdate() {
-    // enable mouse actions after component update;
+    this.currIdx = 1;
+    this.goToPage(1);
   }
   touchStart = e => {
     this.enableDrag = true;
